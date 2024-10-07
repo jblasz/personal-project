@@ -51,5 +51,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "personal-project.sln"
+    "dotnet.defaultSolution": "personal-project.sln",
+    "editor.formatOnSave": true
 }
