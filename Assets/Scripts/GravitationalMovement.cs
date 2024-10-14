@@ -5,33 +5,39 @@ using UnityEngine;
 
 public class GravitationalMovement : MonoBehaviour
 {
-    public Vector3 velVector;
-    public Vector3 accelVector;
+    public Vector3 engineForwardVector;
     public PlanetController[] planets;
     public SystemController system;
 
     // Start is called before the first frame update
     void Start()
     {
-        velVector = new Vector3(0, 0, 0);
-        accelVector = new Vector3(0, 0, 0);
-        planets = GameObject.FindObjectsByType<PlanetController>(FindObjectsSortMode.InstanceID);
+        engineForwardVector = Vector3.forward * 8;
+
         system = GameObject.FindObjectOfType<SystemController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        List<Vector3> composites = new List<Vector3>();
+        Vector3 compositeForce = engineForwardVector;
+        planets = GameObject.FindObjectsByType<PlanetController>(FindObjectsSortMode.InstanceID);
         foreach (var planet in planets)
         {
-            composites.Append(calculateGravity(planet));
+            compositeForce += calculateGravity(planet);
+            Debug.Log("x: " + compositeForce.y + "y: " + compositeForce.y + "z: " + compositeForce.z);
         }
+
+        var lookRotation = Quaternion.LookRotation(compositeForce);
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * system.turnSpeed);
+
+        transform.Translate(Vector3.forward * Time.deltaTime * compositeForce.magnitude);
     }
 
     Vector3 calculateGravity(PlanetController planet)
     {
-        var vect = planet.transform.position - gameObject.transform.position;
+        var vect = planet.transform.position - transform.position;
         var l = vect.magnitude;
         var normalVector = vect.normalized;
         Debug.Log(l);

@@ -6,20 +6,23 @@ public class SystemController : MonoBehaviour
 {
     public GameObject planetPrefab;
     public float gravityCoefficient;
+    public float turnSpeed = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        GeneratePlanet();
-        GeneratePlanet();
-        GeneratePlanet();
-        GeneratePlanet();
-        GeneratePlanet();
-        gravityCoefficient = 1;
-        // CreatePlanet(8.0f, 0);
-        // CreatePlanet(9.0f, 0);
-        // CreatePlanet(11.0f, 0);
-        // CreatePlanet(13.0f, 0);
+        // GeneratePlanet();
+        // GeneratePlanet();
+        // GeneratePlanet();
+        // GeneratePlanet();
+        // GeneratePlanet();
+        gravityCoefficient = 0.3f;
+        GeneratePlanet(3.0f);
+        GeneratePlanet(4.0f);
+        GeneratePlanet(5.0f);
+        GeneratePlanet(6.0f);
+        GeneratePlanet(7.0f);
+        GeneratePlanet(8.0f);
     }
 
     // Update is called once per frame
@@ -29,6 +32,7 @@ public class SystemController : MonoBehaviour
     }
 
     void GeneratePlanet(
+        float orbit = 0
     )
     {
         GameObject planet = Instantiate(
@@ -37,9 +41,9 @@ public class SystemController : MonoBehaviour
             planetPrefab.transform.rotation
             );
         PlanetController pcScript = planet.GetComponent<PlanetController>();
-        pcScript.planetRadius = Random.Range(0.1f, 2f);
+        pcScript.planetRadius = Random.Range(0.5f, 1f);
         pcScript.rotationSpeed = Random.Range(3, 72) * 10;
-        pcScript.orbitRadius = Random.Range(1, 10);
+        pcScript.orbitRadius = orbit == 0 ? Random.Range(3, 10) : orbit;
         pcScript.fullAge = Random.Range(5, 20);
         pcScript.age = Random.Range(0, pcScript.fullAge);
     }

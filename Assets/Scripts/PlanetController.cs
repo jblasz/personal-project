@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlanetController : MonoBehaviour
 {
-    public float mass = 100f;
+    public float mass = 10f;
 
     public float planetRadius;
     public float rotationSpeed;
@@ -34,7 +34,7 @@ public class PlanetController : MonoBehaviour
 
     void UpdatePosition()
     {
-        Debug.Log(gameObject);
+        // Debug.Log(gameObject);
         float currentAngle = age / fullAge * 2 * (float)Math.PI;
         float newX = orbitRadius * (float)Math.Sin(currentAngle);
         float newZ = orbitRadius * (float)Math.Cos(currentAngle);

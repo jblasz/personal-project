@@ -460,6 +460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planetPrefab: {fileID: 7225871888853969339, guid: 433bbdbc0d355c741946379119f6cdc2, type: 3}
   gravityCoefficient: 0
+  turnSpeed: 5
 --- !u!1 &2107759456
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,8 +493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b591e84b973f404ca44f4ff6eabf3ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velVector: {x: 0, y: 0, z: 0}
-  accelVector: {x: 0, y: 0, z: 0}
+  engineForwardVector: {x: 0, y: 0, z: 0}
   planets: []
   system: {fileID: 0}
 --- !u!136 &2107759458
@@ -577,13 +577,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107759456}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -8}
   m_LocalScale: {x: 0.2, y: 0.4, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
