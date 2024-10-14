@@ -12,7 +12,7 @@ public class GravitationalMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        engineForwardVector = Vector3.forward * 8;
+        engineForwardVector = Vector3.forward * 1;
 
         system = GameObject.FindObjectOfType<SystemController>();
     }
@@ -33,6 +33,8 @@ public class GravitationalMovement : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * system.turnSpeed);
 
         transform.Translate(Vector3.forward * Time.deltaTime * compositeForce.magnitude);
+
+        engineForwardVector = compositeForce * 0.1f;
     }
 
     Vector3 calculateGravity(PlanetController planet)

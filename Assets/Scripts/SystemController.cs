@@ -6,7 +6,7 @@ public class SystemController : MonoBehaviour
 {
     public GameObject planetPrefab;
     public float gravityCoefficient;
-    public float turnSpeed = 1.0f;
+    public float turnSpeed = 0.5f;
 
     // Start is called before the first frame update
     void Start()
