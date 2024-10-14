@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlanetController : MonoBehaviour
 {
-    // public float mass = 1.0f;
+    public float mass = 100f;
 
     public float planetRadius;
     public float rotationSpeed;

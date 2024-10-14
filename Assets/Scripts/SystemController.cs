@@ -5,6 +5,7 @@ using UnityEngine;
 public class SystemController : MonoBehaviour
 {
     public GameObject planetPrefab;
+    public float gravityCoefficient;
 
     // Start is called before the first frame update
     void Start()
@@ -14,7 +15,7 @@ public class SystemController : MonoBehaviour
         GeneratePlanet();
         GeneratePlanet();
         GeneratePlanet();
-
+        gravityCoefficient = 1;
         // CreatePlanet(8.0f, 0);
         // CreatePlanet(9.0f, 0);
         // CreatePlanet(11.0f, 0);
