@@ -5,24 +5,20 @@ using UnityEngine;
 public class SystemController : MonoBehaviour
 {
     public GameObject planetPrefab;
-    public float gravityCoefficient;
-    public float turnSpeed = 0.5f;
+    public GameObject projectilePrefab;
+    public PlayerController player;
+    public float gravityCoefficient = 1.0f;
+    public float turnSpeed = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        // GeneratePlanet();
-        // GeneratePlanet();
-        // GeneratePlanet();
-        // GeneratePlanet();
-        // GeneratePlanet();
-        gravityCoefficient = 0.3f;
-        GeneratePlanet(3.0f);
-        GeneratePlanet(4.0f);
-        GeneratePlanet(5.0f);
-        GeneratePlanet(6.0f);
-        GeneratePlanet(7.0f);
-        GeneratePlanet(8.0f);
+        gravityCoefficient = 0.7f;
+        // GeneratePlanet(3.0f);
+        // GeneratePlanet(4.0f);
+        // GeneratePlanet(5.0f);
+        // GeneratePlanet(6.0f);
+        // GeneratePlanet(7.0f);
     }
 
     // Update is called once per frame
