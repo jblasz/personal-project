@@ -6,37 +6,43 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public GameObject projectilePrefab;
+    public SystemController systemController;
 
-    float currentForce = 1.0f;
+    float currentGauge = 0.5f;
 
-    float forceIncrement = 0.5f;
-    float minForce = 0.0f;
-    float maxForce = 1.0f;
+    float gaugeIncrement = 0.5f;
+    float minGauge = 0.2f;
+    float maxGauge = 1.0f;
+    float maxForce = 600;
 
-    float playerLaunchOrbit = 8.0f;
+    float playerLaunchOrbit = 11.0f;
 
     float currentAngle = 0.0f;
-    float angleIncrement = 40.0f;
+    float angleIncrement = 60.0f;
     float maxAngle = 360;
 
     // Start is called before the first frame update
     void Start()
     {
-        LaunchProjectile();
+        systemController = FindObjectOfType<SystemController>();
     }
 
     void LaunchProjectile()
     {
-        var start = GetLineStart();
-        var end = GetLineEnd();
-        var go = Instantiate(
-            projectilePrefab,
-            GetLineStart(),
-            Quaternion.LookRotation((end - start).normalized, Vector3.up)
-        );
-        var pc = go.GetComponent<ProjectileController>();
+        if (systemController.projectilesLeft > 0)
+        {
+            var start = GetLineStart();
+            var end = GetLineEnd();
+            var go = Instantiate(
+                projectilePrefab,
+                GetLineStart(),
+                Quaternion.LookRotation((end - start).normalized, Vector3.up)
+            );
+            var pc = go.GetComponent<ProjectileController>();
+            pc.launchForce = currentGauge * maxForce;
+            systemController.UpdateProjectilesLeft(-1);
+        }
 
-        pc.launchForce = currentForce * 400;
     }
 
     // Update is called once per frame
@@ -44,11 +50,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            currentForce = Math.Min(currentForce + Time.deltaTime * forceIncrement, maxForce);
+            currentGauge = Math.Min(currentGauge + Time.deltaTime * gaugeIncrement, maxGauge);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            currentForce = Math.Max(currentForce - Time.deltaTime * forceIncrement, minForce);
+            currentGauge = Math.Max(currentGauge - Time.deltaTime * gaugeIncrement, minGauge);
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -76,8 +82,8 @@ public class PlayerController : MonoBehaviour
     Vector3 GetPointOnCircle(float radius)
     {
         float angle = currentAngle / maxAngle * 2 * (float)System.Math.PI;
-        float x = radius * (float)System.Math.Sin(angle);
-        float z = radius * (float)System.Math.Cos(angle);
+        float x = radius * (float)Math.Sin(angle);
+        float z = radius * (float)Math.Cos(angle);
         return new Vector3(x, 0, z);
     }
 
@@ -88,13 +94,12 @@ public class PlayerController : MonoBehaviour
 
     Vector3 GetLineEnd()
     {
-        return GetPointOnCircle(playerLaunchOrbit - currentForce);
+        return GetPointOnCircle(playerLaunchOrbit - currentGauge);
     }
 
     void DrawForceLine()
     {
         var line = FindObjectOfType<LineRenderer>();
-        // line.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
         var start = GetLineStart();
         var end = GetLineEnd();
 
@@ -102,7 +107,6 @@ public class PlayerController : MonoBehaviour
         line.endColor = Color.cyan;
         line.startWidth = 0.1f;
         line.endWidth = 0.1f;
-        // Debug.Log("x:" + startX + "z:" + startZ + "angle:" + angle + "force:" + currentForce);
         line.SetPosition(0, new Vector3(
             start.x,
             line.transform.position.y,

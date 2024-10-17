@@ -7,87 +7,58 @@ using UnityEngine;
 public class ProjectileController : MonoBehaviour
 {
     public float launchForce;
-    float forceDeterioration = 1.0f;
+    public ParticleSystem explodeParticle;
     Vector3 currentVelocity;
     PlanetController[] planets;
-    SystemController system;
+    SystemController systemController;
 
     // Start is called before the first frame update
     void Start()
     {
-        system = FindObjectOfType<SystemController>();
+        systemController = FindObjectOfType<SystemController>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        DestroyOutOfBound();
         if (gameObject == null)
         {
             return;
         }
 
         planets = FindObjectsByType<PlanetController>(FindObjectsSortMode.InstanceID);
-        // Debug.Log("planetCount:" + planets.Length);
 
         Vector3 compositeForce = transform.forward * launchForce;
-        for (var i = 0; i < planets.Length; i++)
+
+        foreach (var planet in planets)
         {
-            // Debug.Log("planet " + i);
-            // DebVect(compositeForce, "composite");
-            compositeForce += calculateGravity(planets[i]);
+            compositeForce += calculateGravity(planet);
         }
-        // foreach (var planet in planets)
-        // {
-        //     // Debug.Log("x: " + compositeForce.y + "y: " + compositeForce.y + "z: " + compositeForce.z);
-        // }
 
-        // DebVect(compositeForce, "composite");
         var lookRotation = Quaternion.LookRotation(compositeForce);
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * system.turnSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * systemController.turnSpeed);
 
         var velocity = compositeForce * Time.deltaTime + currentVelocity;
-
         transform.Translate(Vector3.forward * velocity.magnitude * Time.deltaTime);
-
-        launchForce *= forceDeterioration;
-
-        // Vector3 compositeForce = launchForce;
-        // planets = GameObject.FindObjectsByType<PlanetController>(FindObjectsSortMode.InstanceID);
-        // foreach (var planet in planets)
-        // {
-        //     compositeForce += calculateGravity(planet);
-        //     Debug.Log("x: " + compositeForce.y + "y: " + compositeForce.y + "z: " + compositeForce.z);
-        // }
-        // var lookRotation = Quaternion.LookRotation(compositeForce);
-        // transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * system.turnSpeed);
-        // transform.Translate(Vector3.forward * Time.deltaTime * compositeForce.magnitude);
-        // launchForce = compositeForce * 0.5f;
     }
 
     Vector3 calculateGravity(PlanetController planet)
     {
         var vect = planet.transform.position - transform.position;
-        // DebVect(vect, "vectToPlanet");
         var l = vect.magnitude;
         var normalVector = vect.normalized;
-        // Debug.Log(l);
-        // Debug.Log(normalVector);
-        var g = system.gravityCoefficient;
+        var g = systemController.gravityCoefficient;
         var force = g * planet.mass / (l * l);
-        // Debug.Log("f: " + force + " g: " + g + " m: " + planet.mass + " l: " + l);
-        // DebVect(normalVector * g * force, "gravRes");
         return normalVector * g * force;
     }
 
-    void DebVect(Vector3 v, String msg = "")
+    void DestroyOutOfBound()
     {
-        Debug.Log(msg + " x: " + v.x + " y: " + v.y + " z: " + v.z);
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("Crash!");
-        Destroy(gameObject);
+        if (gameObject.transform.position.magnitude > 12)
+        {
+            systemController.UpdateProjectilesLeft(0);
+            Destroy(gameObject, 0.2f);
+        }
     }
 }

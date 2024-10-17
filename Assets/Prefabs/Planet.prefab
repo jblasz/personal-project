@@ -152,12 +152,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b897c471d39cf8448e045df02ba118b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explodeParticle: {fileID: 4408680864088971330, guid: 66daa5af5c7ec1840ada51f79ace60fe, type: 3}
   mass: 10
   planetRadius: 0
   rotationSpeed: 0
   orbitRadius: 0
   age: 0
   fullAge: 0
+  parent: {fileID: 0}
+  orbitsCounterclockwise: 0
 --- !u!65 &4282076511864241156
 BoxCollider:
   m_ObjectHideFlags: 0
