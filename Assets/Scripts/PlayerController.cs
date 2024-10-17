@@ -27,15 +27,16 @@ public class PlayerController : MonoBehaviour
 
     void LaunchProjectile()
     {
+        var start = GetLineStart();
+        var end = GetLineEnd();
         var go = Instantiate(
             projectilePrefab,
             GetLineStart(),
-            projectilePrefab.transform.rotation
+            Quaternion.LookRotation((end - start).normalized, Vector3.up)
         );
         var pc = go.GetComponent<ProjectileController>();
-        var start = GetLineStart();
-        var end = GetLineEnd();
-        pc.launchForce = (end - start).normalized * 100;
+
+        pc.launchForce = currentForce * 200;
     }
 
     // Update is called once per frame
@@ -94,7 +95,6 @@ public class PlayerController : MonoBehaviour
     {
         var line = FindObjectOfType<LineRenderer>();
         // line.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
-        float angle = currentAngle / maxAngle * 2 * (float)System.Math.PI;
         var start = GetLineStart();
         var end = GetLineEnd();
 

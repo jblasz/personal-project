@@ -13,11 +13,11 @@ public class SystemController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gravityCoefficient = 0.7f;
-        // GeneratePlanet(3.0f);
-        // GeneratePlanet(4.0f);
-        // GeneratePlanet(5.0f);
-        // GeneratePlanet(6.0f);
+        gravityCoefficient = 2f;
+        GeneratePlanet(3.0f);
+        GeneratePlanet(4.0f);
+        GeneratePlanet(5.0f);
+        GeneratePlanet(6.0f);
         // GeneratePlanet(7.0f);
     }
 

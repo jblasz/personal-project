@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
-    public Vector3 launchForce;
-    float forceDeterioration = 0.95f;
+    public float launchForce;
+    float forceDeterioration = 1.0f;
     Vector3 currentVelocity;
     PlanetController[] planets;
     SystemController system;
@@ -21,10 +21,10 @@ public class ProjectileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 compositeForce = launchForce;
         planets = FindObjectsByType<PlanetController>(FindObjectsSortMode.InstanceID);
         Debug.Log("planetCount:" + planets.Length);
 
+        Vector3 compositeForce = transform.forward * launchForce;
         for (var i = 0; i < planets.Length; i++)
         {
             Debug.Log("planet " + i);
@@ -46,6 +46,18 @@ public class ProjectileController : MonoBehaviour
         transform.Translate(Vector3.forward * velocity.magnitude * Time.deltaTime);
 
         launchForce *= forceDeterioration;
+
+        // Vector3 compositeForce = launchForce;
+        // planets = GameObject.FindObjectsByType<PlanetController>(FindObjectsSortMode.InstanceID);
+        // foreach (var planet in planets)
+        // {
+        //     compositeForce += calculateGravity(planet);
+        //     Debug.Log("x: " + compositeForce.y + "y: " + compositeForce.y + "z: " + compositeForce.z);
+        // }
+        // var lookRotation = Quaternion.LookRotation(compositeForce);
+        // transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * system.turnSpeed);
+        // transform.Translate(Vector3.forward * Time.deltaTime * compositeForce.magnitude);
+        // launchForce = compositeForce * 0.5f;
     }
 
     Vector3 calculateGravity(PlanetController planet)
