@@ -21,14 +21,19 @@ public class ProjectileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameObject == null)
+        {
+            return;
+        }
+
         planets = FindObjectsByType<PlanetController>(FindObjectsSortMode.InstanceID);
-        Debug.Log("planetCount:" + planets.Length);
+        // Debug.Log("planetCount:" + planets.Length);
 
         Vector3 compositeForce = transform.forward * launchForce;
         for (var i = 0; i < planets.Length; i++)
         {
-            Debug.Log("planet " + i);
-            DebVect(compositeForce, "composite");
+            // Debug.Log("planet " + i);
+            // DebVect(compositeForce, "composite");
             compositeForce += calculateGravity(planets[i]);
         }
         // foreach (var planet in planets)
@@ -36,7 +41,7 @@ public class ProjectileController : MonoBehaviour
         //     // Debug.Log("x: " + compositeForce.y + "y: " + compositeForce.y + "z: " + compositeForce.z);
         // }
 
-        DebVect(compositeForce, "composite");
+        // DebVect(compositeForce, "composite");
         var lookRotation = Quaternion.LookRotation(compositeForce);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * system.turnSpeed);
@@ -70,7 +75,7 @@ public class ProjectileController : MonoBehaviour
         // Debug.Log(normalVector);
         var g = system.gravityCoefficient;
         var force = g * planet.mass / (l * l);
-        Debug.Log("f: " + force + " g: " + g + " m: " + planet.mass + " l: " + l);
+        // Debug.Log("f: " + force + " g: " + g + " m: " + planet.mass + " l: " + l);
         // DebVect(normalVector * g * force, "gravRes");
         return normalVector * g * force;
     }
@@ -78,5 +83,11 @@ public class ProjectileController : MonoBehaviour
     void DebVect(Vector3 v, String msg = "")
     {
         Debug.Log(msg + " x: " + v.x + " y: " + v.y + " z: " + v.z);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Crash!");
+        Destroy(gameObject);
     }
 }

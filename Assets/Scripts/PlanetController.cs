@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class PlanetController : MonoBehaviour
 {
-    public float mass = 10f;
-
+    public float mass;
     public float planetRadius;
     public float rotationSpeed;
     public float orbitRadius;
@@ -49,5 +48,12 @@ public class PlanetController : MonoBehaviour
     void RotateAroundItself()
     {
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("CrashP!");
+        Debug.Log(collision.gameObject.GetType());
+        Debug.Log(collision.gameObject);
     }
 }

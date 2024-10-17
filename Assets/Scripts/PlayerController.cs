@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         );
         var pc = go.GetComponent<ProjectileController>();
 
-        pc.launchForce = currentForce * 200;
+        pc.launchForce = currentForce * 400;
     }
 
     // Update is called once per frame

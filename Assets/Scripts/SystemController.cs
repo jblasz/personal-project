@@ -13,7 +13,7 @@ public class SystemController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gravityCoefficient = 2f;
+        gravityCoefficient = 3f;
         GeneratePlanet(3.0f);
         GeneratePlanet(4.0f);
         GeneratePlanet(5.0f);
@@ -42,5 +42,6 @@ public class SystemController : MonoBehaviour
         pcScript.orbitRadius = orbit == 0 ? Random.Range(3, 10) : orbit;
         pcScript.fullAge = Random.Range(5, 20);
         pcScript.age = Random.Range(0, pcScript.fullAge);
+        pcScript.mass = pcScript.planetRadius * 50;
     }
 }
