@@ -5,6 +5,16 @@ using TMPro;
 
 public class SystemController : MonoBehaviour
 {
+    public GameObject earthPref;
+    public GameObject jupiPref;
+    public GameObject marsPref;
+    public GameObject mercPref;
+    public GameObject moonPref;
+    public GameObject neptuPref;
+    public GameObject plutoPref;
+    public GameObject saturPref;
+    public GameObject uranuPref;
+    public GameObject venusPref;
     public GameObject planetPrefab;
     public GameObject projectilePrefab;
     public GameObject parent = null;
@@ -19,22 +29,21 @@ public class SystemController : MonoBehaviour
 
     public void InitializeSystem()
     {
-        GenerateMoons(GeneratePlanet(1.5f));
-        GenerateMoons(GeneratePlanet(3.0f));
-        GenerateMoons(GeneratePlanet(4.5f));
-        GenerateMoons(GeneratePlanet(6.0f));
-        GenerateMoons(GeneratePlanet(7.5f));
-        GenerateMoons(GeneratePlanet(9.0f));
+        GenerateMoons(GeneratePlanet(1.0f, PlanetType.MERCURY));
+        GenerateMoons(GeneratePlanet(2.5f, PlanetType.VENUS));
+        GenerateMoons(GeneratePlanet(4.0f, PlanetType.EARTH));
+        GenerateMoons(GeneratePlanet(5.5f, PlanetType.MARS));
+        GenerateMoons(GeneratePlanet(7.0f, PlanetType.JUPITER));
+        GenerateMoons(GeneratePlanet(8.5f, PlanetType.SATURN));
+        GenerateMoons(GeneratePlanet(10.0f, PlanetType.URANUS));
     }
 
     void GenerateMoons(GameObject parent)
     {
-        Debug.Log(gameState.currentDifficulty);
-        Debug.Log("Generate" + gameState.moonCountMin + " " + gameState.moonCountMax);
         int count = Random.Range(gameState.moonCountMin, gameState.moonCountMax);
         for (var i = 0; i < count; i++)
         {
-            GeneratePlanet(1.2f / count * (i + 1), parent);
+            GeneratePlanet(1.2f / count * (i + 1), PlanetType.MOON, parent);
         }
     }
 
@@ -43,17 +52,48 @@ public class SystemController : MonoBehaviour
     {
     }
 
+    public GameObject GetPlanetPrefab(PlanetType pt)
+    {
+        switch (pt)
+        {
+            case PlanetType.MERCURY:
+                return mercPref;
+            case PlanetType.VENUS:
+                return venusPref;
+            case PlanetType.EARTH:
+                return earthPref;
+            case PlanetType.MARS:
+                return marsPref;
+            case PlanetType.JUPITER:
+                return jupiPref;
+            case PlanetType.SATURN:
+                return saturPref;
+            case PlanetType.URANUS:
+                return uranuPref;
+            case PlanetType.NEPTUNE:
+                return neptuPref;
+            case PlanetType.PLUTO:
+                return plutoPref;
+            case PlanetType.MOON:
+                return moonPref;
+        }
+        return moonPref;
+    }
+
     GameObject GeneratePlanet(
         float orbit,
+        PlanetType pt,
         GameObject parentPlanet = null
     )
     {
+        var pref = GetPlanetPrefab(pt);
+
         if (parentPlanet == null)
         {
             GameObject planet = Instantiate(
-                planetPrefab,
+                pref,
                 new Vector3(0, 0, 0),
-                planetPrefab.transform.rotation
+                pref.transform.rotation
                 );
             PlanetController pcScript = planet.GetComponent<PlanetController>();
             pcScript.planetRadius = Random.Range(0.5f, 0.8f);
@@ -69,9 +109,9 @@ public class SystemController : MonoBehaviour
         else
         {
             GameObject planet = Instantiate(
-                planetPrefab,
+                pref,
                 new Vector3(0, 0, 0),
-                planetPrefab.transform.rotation,
+                pref.transform.rotation,
                 parentPlanet.transform
                 );
             PlanetController pcScript = planet.GetComponent<PlanetController>();

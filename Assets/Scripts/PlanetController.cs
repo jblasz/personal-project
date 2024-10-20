@@ -16,6 +16,8 @@ public class PlanetController : MonoBehaviour
     public GameObject parent = null;
     public bool orbitsCounterclockwise = false;
     public int ID;
+    public PlanetType planetType;
+    public AudioClip explosionClip;
     GameState gameState;
 
     // Start is called before the first frame update
@@ -93,13 +95,11 @@ public class PlanetController : MonoBehaviour
                 .OrderBy(planet => planet.orbitRadius)
                 .First();
 
-
-
             if (firstPlanet.ID == ID)
             {
                 Destroy(collision.gameObject);
                 gameState.UpdateProjectilesLeft(1);
-                BlowUp();
+                firstPlanet.BlowUp();
             }
             else if (parent)
             {
@@ -108,7 +108,8 @@ public class PlanetController : MonoBehaviour
                 {
                     Destroy(collision.gameObject);
                     gameState.UpdateProjectilesLeft(1);
-                    pc.BlowUp();
+                    // pc.BlowUp();
+                    firstPlanet.BlowUp();
                 }
                 else
                 {
@@ -119,7 +120,7 @@ public class PlanetController : MonoBehaviour
             }
             else
             {
-                Destroy(collision.gameObject);
+                collision.gameObject.GetComponent<ProjectileController>().BlowUp();
             }
         }
     }

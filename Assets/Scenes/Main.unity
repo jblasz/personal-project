@@ -1229,6 +1229,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20ea7074723218b4b8f1518a899889bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  systemController: {fileID: 0}
+  planetTextures:
+  - {fileID: 2800000, guid: cce2301743d2141678f7423df467472c, type: 3}
+  - {fileID: 2800000, guid: d5c9344e016b14b5f9fae5f0d703b15c, type: 3}
+  - {fileID: 2800000, guid: 0367c6e3b2e814b1b8c10f37ab658fb9, type: 3}
+  - {fileID: 2800000, guid: 785a85c72ee2045db9591e4a9a7fbbeb, type: 3}
+  - {fileID: 2800000, guid: 2f1708834aabb4bd582abee7638e4da5, type: 3}
+  - {fileID: 2800000, guid: 642e5534a95f84daca32f0fcf0fa6c74, type: 3}
+  - {fileID: 2800000, guid: 225494c2ffe3e445ab0aa1b3f6a661f2, type: 3}
+  - {fileID: 2800000, guid: 7fa5ce735aa1b4408a20b98a30f0dad4, type: 3}
+  - {fileID: 2800000, guid: c30c20856f88b43289aeed89910865da, type: 3}
+  moonTexture: {fileID: 2800000, guid: f86f3eee3fc3641f0ac3fbb7e1fb6999, type: 3}
   gameOverText: {fileID: 452708121}
   victoryText: {fileID: 1791711903}
   projectilesLeftText: {fileID: 1684912280}
@@ -1242,8 +1254,12 @@ MonoBehaviour:
   toMenuBtnVictory: {fileID: 2061199689}
   playerLine: {fileID: 2052826612}
   gameStage: 0
-  projectilesLeft: 0
   currentDifficulty: 0
+  gravityCoefficient: 0
+  projectilesLeft: 0
+  turnSpeed: 0
+  moonCountMin: 0
+  moonCountMax: 0
 --- !u!4 &1080912351
 Transform:
   m_ObjectHideFlags: 0
@@ -2478,9 +2494,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d83e72e33ff981448809302df6f9578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  earthPref: {fileID: 7225871888853969339, guid: 074e79dda30b9094084419c4637b0051, type: 3}
+  jupiPref: {fileID: 7225871888853969339, guid: af6a3e2c6b2f5bc478fac388e2de5bb1, type: 3}
+  marsPref: {fileID: 7225871888853969339, guid: ba7e8878c6efcfe4996982050b2b889c, type: 3}
+  mercPref: {fileID: 7225871888853969339, guid: 38858131c6e371a4f90c784eff091cd4, type: 3}
+  moonPref: {fileID: 7225871888853969339, guid: 744512f77b4f0e54483b920e644594eb, type: 3}
+  neptuPref: {fileID: 7225871888853969339, guid: e5977588c24b68f47a573377f9722090, type: 3}
+  plutoPref: {fileID: 7225871888853969339, guid: bf29eb2561aeaaf4a8da0e7c14a45fc8, type: 3}
+  saturPref: {fileID: 7225871888853969339, guid: 34b13a8a19a131144ac013dfe5ad4d90, type: 3}
+  uranuPref: {fileID: 7225871888853969339, guid: 45b7c9bc314068a4ca51ba9bad0ecbce, type: 3}
+  venusPref: {fileID: 7225871888853969339, guid: 433bbdbc0d355c741946379119f6cdc2, type: 3}
   planetPrefab: {fileID: 7225871888853969339, guid: 433bbdbc0d355c741946379119f6cdc2, type: 3}
   projectilePrefab: {fileID: 4832618310514211753, guid: d16859b31db72a04ba41f76a03866695, type: 3}
   parent: {fileID: 0}
+  gameState: {fileID: 0}
 --- !u!1 &1791711901
 GameObject:
   m_ObjectHideFlags: 0

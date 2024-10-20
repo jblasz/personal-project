@@ -5,6 +5,20 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 
+public enum PlanetType
+{
+    MERCURY,
+    VENUS,
+    EARTH,
+    MARS,
+    JUPITER,
+    SATURN,
+    URANUS,
+    NEPTUNE,
+    PLUTO,
+    MOON,
+}
+
 public class GameState : MonoBehaviour
 {
     public enum GameStage
@@ -117,27 +131,24 @@ public class GameState : MonoBehaviour
         {
             case GameDifficulty.EASY:
                 projectilesLeft = 9;
-                gravityCoefficient = 3.0f;
+                gravityCoefficient = 5.0f;
                 turnSpeed = 5.0f;
-                moonCountMin = 2;
-                moonCountMax = 5;
-                Debug.Log("Hit easy set");
+                moonCountMin = 0;
+                moonCountMax = 3;
                 break;
             case GameDifficulty.MEDIUM:
                 projectilesLeft = 6;
                 gravityCoefficient = 5.0f;
                 turnSpeed = 10.0f;
                 moonCountMin = 0;
-                moonCountMax = 3;
-                Debug.Log("Hit Med set");
+                moonCountMax = 2;
                 break;
             case GameDifficulty.HARD:
                 projectilesLeft = 3;
-                gravityCoefficient = 7.0f;
+                gravityCoefficient = 3.0f;
                 turnSpeed = 15.0f;
                 moonCountMin = 0;
                 moonCountMax = 1;
-                Debug.Log("Hit hard set");
                 break;
         }
         UpdateProjectilesLeft(0);

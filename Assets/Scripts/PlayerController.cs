@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     public GameObject projectilePrefab;
     GameState gameState;
+    public AudioClip launchSound;
 
     float currentGauge = 0.5f;
 
