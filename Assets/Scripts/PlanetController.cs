@@ -19,6 +19,7 @@ public class PlanetController : MonoBehaviour
     public PlanetType planetType;
     public AudioClip explosionClip;
     GameState gameState;
+    AudioSource playerAudio;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class PlanetController : MonoBehaviour
         gameState = FindFirstObjectByType<GameState>();
         transform.localScale = new Vector3(planetRadius, planetRadius, planetRadius);
         UpdatePosition();
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -81,6 +83,7 @@ public class PlanetController : MonoBehaviour
         var ep = Instantiate(explodeParticle);
         ep.transform.position = gameObject.transform.position;
         ep.Play();
+        playerAudio.PlayOneShot(explosionClip, 1.0f);
         Destroy(gameObject, 0.1f);
     }
 

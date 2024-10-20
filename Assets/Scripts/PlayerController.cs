@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab;
     GameState gameState;
     public AudioClip launchSound;
-
+    AudioSource playerAudio;
     float currentGauge = 0.5f;
 
     float gaugeIncrement = 0.5f;
@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         gameState = FindFirstObjectByType<GameState>();
+        playerAudio = GetComponent<AudioSource>();
     }
 
     void LaunchProjectile()
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
             var pc = go.GetComponent<ProjectileController>();
             pc.launchForce = currentGauge * maxForce;
             gameState.UpdateProjectilesLeft(-1);
+            playerAudio.PlayOneShot(launchSound, 1.0f);
         }
 
     }
