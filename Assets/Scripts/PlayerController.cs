@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public GameObject projectilePrefab;
-    public SystemController systemController;
+    GameState gameState;
 
     float currentGauge = 0.5f;
 
@@ -24,12 +24,12 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        systemController = FindObjectOfType<SystemController>();
+        gameState = FindFirstObjectByType<GameState>();
     }
 
     void LaunchProjectile()
     {
-        if (systemController.projectilesLeft > 0)
+        if (gameState.projectilesLeft > 0)
         {
             var start = GetLineStart();
             var end = GetLineEnd();
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
             );
             var pc = go.GetComponent<ProjectileController>();
             pc.launchForce = currentGauge * maxForce;
-            systemController.UpdateProjectilesLeft(-1);
+            gameState.UpdateProjectilesLeft(-1);
         }
 
     }
@@ -48,6 +48,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameState.gameStage != GameState.GameStage.GAMEPLAY)
+        {
+            return;
+        }
         if (Input.GetKey(KeyCode.W))
         {
             currentGauge = Math.Min(currentGauge + Time.deltaTime * gaugeIncrement, maxGauge);
@@ -99,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
     void DrawForceLine()
     {
-        var line = FindObjectOfType<LineRenderer>();
+        var line = gameState.playerLine;
         var start = GetLineStart();
         var end = GetLineEnd();
 

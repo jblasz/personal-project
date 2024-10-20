@@ -8,14 +8,16 @@ public class ProjectileController : MonoBehaviour
 {
     public float launchForce;
     public ParticleSystem explodeParticle;
+    GameState gameState;
+
     Vector3 currentVelocity;
     PlanetController[] planets;
-    SystemController systemController;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        systemController = FindObjectOfType<SystemController>();
+        gameState = FindFirstObjectByType<GameState>();
     }
 
     // Update is called once per frame
@@ -37,7 +39,7 @@ public class ProjectileController : MonoBehaviour
         }
 
         var lookRotation = Quaternion.LookRotation(compositeForce);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * systemController.turnSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * gameState.turnSpeed);
 
         var velocity = compositeForce * Time.deltaTime + currentVelocity;
         transform.Translate(Vector3.forward * velocity.magnitude * Time.deltaTime);
@@ -48,7 +50,7 @@ public class ProjectileController : MonoBehaviour
         var vect = planet.transform.position - transform.position;
         var l = vect.magnitude;
         var normalVector = vect.normalized;
-        var g = systemController.gravityCoefficient;
+        var g = gameState.gravityCoefficient;
         var force = g * planet.mass / (l * l);
         return normalVector * g * force;
     }
@@ -57,8 +59,16 @@ public class ProjectileController : MonoBehaviour
     {
         if (gameObject.transform.position.magnitude > 12)
         {
-            systemController.UpdateProjectilesLeft(0);
-            Destroy(gameObject, 0.2f);
+            gameState.UpdateProjectilesLeft(0);
+            BlowUp();
         }
+    }
+
+    public void BlowUp()
+    {
+        var ep = Instantiate(explodeParticle);
+        ep.transform.position = gameObject.transform.position;
+        ep.Play();
+        Destroy(gameObject, 0.05f);
     }
 }

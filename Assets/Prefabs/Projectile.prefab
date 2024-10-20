@@ -119,4 +119,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   launchForce: 0
-  explodeParticle: {fileID: 0}
+  explodeParticle: {fileID: 4408680864088971330, guid: 66daa5af5c7ec1840ada51f79ace60fe, type: 3}

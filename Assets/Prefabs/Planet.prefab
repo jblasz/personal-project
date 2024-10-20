@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 5086059383263322666}
   - component: {fileID: 165220600136517697}
   - component: {fileID: 4282076511864241156}
-  - component: {fileID: -6721701866129614234}
+  - component: {fileID: -1087836611994284334}
   m_Layer: 0
   m_Name: Planet
   m_TagString: Untagged
@@ -161,6 +161,7 @@ MonoBehaviour:
   fullAge: 0
   parent: {fileID: 0}
   orbitsCounterclockwise: 0
+  ID: 0
 --- !u!65 &4282076511864241156
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -182,7 +183,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &-6721701866129614234
+--- !u!54 &-1087836611994284334
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -14,20 +14,25 @@ public class PlanetController : MonoBehaviour
     public float age;
     public float fullAge;
     public GameObject parent = null;
-    public SystemController systemController;
     public bool orbitsCounterclockwise = false;
     public int ID;
+    GameState gameState;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameState = FindFirstObjectByType<GameState>();
         transform.localScale = new Vector3(planetRadius, planetRadius, planetRadius);
         UpdatePosition();
-        systemController = FindFirstObjectByType<SystemController>();
     }
 
     // Update is called once per frame
     void Update()
+    {
+        GameplayUpdate();
+    }
+
+    void GameplayUpdate()
     {
         RotateAroundItself();
         UpdatePosition();
@@ -58,7 +63,7 @@ public class PlanetController : MonoBehaviour
         float newZ = addZ + orbitRadius * (float)Math.Cos(currentAngle);
         transform.position = new Vector3(
             newX,
-            transform.position.y,
+            0,
             newZ
             );
     }
@@ -74,7 +79,6 @@ public class PlanetController : MonoBehaviour
         var ep = Instantiate(explodeParticle);
         ep.transform.position = gameObject.transform.position;
         ep.Play();
-        Destroy(ep, 5);
         Destroy(gameObject, 0.1f);
     }
 
@@ -89,11 +93,29 @@ public class PlanetController : MonoBehaviour
                 .OrderBy(planet => planet.orbitRadius)
                 .First();
 
-            if (firstPlanet.ID == ID || parent)
+
+
+            if (firstPlanet.ID == ID)
             {
                 Destroy(collision.gameObject);
-                systemController.UpdateProjectilesLeft(1);
+                gameState.UpdateProjectilesLeft(1);
                 BlowUp();
+            }
+            else if (parent)
+            {
+                var pc = parent.GetComponent<PlanetController>();
+                if (firstPlanet.ID == pc.ID)
+                {
+                    Destroy(collision.gameObject);
+                    gameState.UpdateProjectilesLeft(1);
+                    pc.BlowUp();
+                }
+                else
+                {
+                    Destroy(collision.gameObject);
+                    gameState.UpdateProjectilesLeft(1);
+                    BlowUp();
+                }
             }
             else
             {
